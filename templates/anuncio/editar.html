@@ -1,0 +1,33 @@
+{% extends "../base.html" %}
+
+{% block titulo %} Edição do anuncio {{ object.modelo }} {% endblock %}
+
+{% block conteudo %}
+
+<form action="/anuncio/{{ object.pk }}/" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-6">
+      <label for="descricao" class="form-label">Descrição</label>
+      {{ form.descricao }}
+    </div>
+    <div class="col-6">
+    <label for="preco" class="form-label">Preço</label>
+      {{ form.preco }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <label for="veiculo" class="form-label">Veiculo</label>
+      {{ form.veiculo }}
+    </div>
+    <div class="col-6">
+      <label for="usuario" class="form-label">Usuario</label>
+      {{ form.usuario }}
+    </div>
+    <div>
+        <input type="submit" value="Salvar" class="btn btn-primary btn-lg mt-3 float-end" />
+    </div>
+</form>
+
+{% endblock %}

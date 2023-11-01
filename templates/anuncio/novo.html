@@ -1,0 +1,32 @@
+{% extends "../base.html" %}
+
+{% block titulo %} Cadastro de novos anuncios {% endblock %}
+
+{% block conteudo %}
+
+<form action="/anuncio/novo/" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-6">
+      <label for="descricao" class="form-label">Descrição</label>
+      {{ form.descricao }}
+    </div>
+    <div class="col-6">
+    <label for="preco" class="form-label">Preço</label>
+      {{ form.preco }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <label for="veiculo" class="form-label">Veiculo</label>
+      {{ form.veiculo }}
+    </div>
+    <div class="col-6">
+      <label for="usuario" class="form-label">Usuario</label>
+      {{ form.usuario }}
+    </div>
+
+  <input type="submit" value="Salvar" class="btn btn-primary mt-3 float-end" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "../base.html" %}
+
+{% block titulo %} Listagem de anúncios {% endblock %}
+
+{% block conteudo %}
+
+<section class="text-center container">
+  <div class="row">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">Anúncios de veículos</h1>
+      <p class="lead text-body-secondary">
+        Desenvolvimento webmobile - Universidade Federal do Tocantins.
+      </p>
+      <p>
+        <a href="/anuncio/novo" class="btn btn-primary my-2">Cadastrar novo anúncio</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="album bg-body-tertiary">
+  <div class="container">
+    <div class="row g-3">
+      {% for a in anuncios %}
+        <div class="col-4">
+          <div class="card shadow-sm">
+
+            {% if a.veiculo.foto %}
+            
+            <img src="{{a.veiculo.foto.url}}" class="bd-placeholder-img card-img-top" height="260" />
+            
+            {% else %}
+            
+            Veículo sem foto
+            
+            {% endif %}
+
+            <div class="card-body">
+              <p>anúncio feito em {{a.data}} </p>
+              <p class="card-text">
+                {{ a.descricao }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  {{ a.veiculo.get_marca_display }} {{ a.veiculo.modelo }} - {{ a.veiculo.ano }}
+                </span>
+                <small class="text-body-secondary">R$ {{ a.preco }}</small>
+              </div>
+              <div>
+                <a href="/anuncio/{{a.id}}" class="btn btn-primary">
+                  <i class="fa fa-edit"></i>
+                </a>
+                <a href="/anuncio/deletar/{{a.id}}" class="btn btn-danger">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}       
+    </div>
+  </div>
+</div>
+{% endblock %}

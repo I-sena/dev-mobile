@@ -1,6 +1,7 @@
 import base64
 from rest_framework import serializers
 from veiculo.models import Veiculo
+from drf_extra_fields.fields import Base64ImageField
 
 class SerializadorVeiculo(serializers.ModelSerializer):
     """
@@ -10,7 +11,7 @@ class SerializadorVeiculo(serializers.ModelSerializer):
     marca_display = serializers.SerializerMethodField()
     cor_display = serializers.SerializerMethodField()
     combustivel_display = serializers.SerializerMethodField()
-    foto = serializers.SerializerMethodField(read_only=True)
+    foto = Base64ImageField(required=False, represent_in_base64=True)
 
     class Meta:
         model = Veiculo
@@ -26,10 +27,3 @@ class SerializadorVeiculo(serializers.ModelSerializer):
     def get_combustivel_display(self, instancia):
         return instancia.get_combustivel_display()
 
-    def get_foto(self, instancia):
-        if instancia.foto:
-            resultado = base64.b64encode(instancia.foto.read())
-            return "data:image/jpeg;base64,{}".format(
-                resultado.decode('utf-8')
-            )
-        return None

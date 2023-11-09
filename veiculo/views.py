@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from veiculo.forms import FormularioVeiculo
 from veiculo.serializers import SerializadorVeiculo
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import permissions
 
@@ -78,8 +78,17 @@ class DeletarVeiculo(LoginObrigatorio, DeleteView):
     template_name = 'veiculo/deletar.html'
     success_url = reverse_lazy('listar-veiculos')
 
-class APIListarVeiculos(ListAPIView):
+class APIListarCriarVeiculos(ListCreateAPIView):
 
+    serializer_class = SerializadorVeiculo
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Veiculo.objects.all()
+
+class APIObterEditarDeletarVeiculos(RetrieveUpdateDestroyAPIView):
+    
     serializer_class = SerializadorVeiculo
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
